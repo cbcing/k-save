@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: service-name
+  namespace: default
+  labels:
+    app: servcie-label
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spec-pod-name
+    spec:
+      nodeSelector:
+        app: java
+      containers:
+      - name: container-name
+        image: registry-1.docker.io/spring-boot/demo-app
+        ports:
+        - containerPort: 17074
+        # 容器目录
+        volumeMounts:
+          - name: log
+            mountPath: /log
+      # 主机目录
+      volumes:
+        - name: log
+          hostPath:
+            path: /data/cbc
