@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mzk-cms-1
+  namespace: default
+  labels:
+    app: mzk-cms-1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mzk-cms-1
+    spec:
+      nodeSelector:
+        app: java
+      containers:
+      - name: mzk-cms-1
+        image: registry-1.docker.io/spring-boot/mzk-cms:v1.0
+        # 环境变量设置
+        env:
+          # 环境变量名称
+        - name: APPLOGLEVEL
+          # 环境变量的值来自于configmap
+          valueFrom:
+            configMapKeyRef:
+              # configmap名称
+              namd: cms-appvars
+              # 该configmap下的key值
+              key: apploglevel
+          # 同上
+        - name: APPDATADIR
+          valueFrom:
+            configMapKeyRef:
+              name: cms-appvars
+              key: appdatadir
+        ports:
+        - containerPort: 17074
+          hostPost: 8081
+        volumeMounts:
+          - name: log
+            mountPath: /log
+      volumes:
+        - name: log
+          hostPath:
+            path: /data/logs/mzk/17074-cms-1
