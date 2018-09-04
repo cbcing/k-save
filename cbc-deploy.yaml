@@ -1,10 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: service-name
+  name: deployment-name
   namespace: default
   labels:
-    app: servcie-label
+    app: deployment-label
 spec:
   replicas: 1
   template:
