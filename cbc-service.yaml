@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+# 元数据
+metadata:
+  # 自定义标签属性列表
+  labels:
+    app: mzk-cms-1
+  # service名称
+  name: mzk-cms-1
+  namespace: default
+# 详细描述
+spec:
+  # service需要暴露的端口列表
+  ports:
+  - port: 17074
+    protocol: TCP
+    # 需要转发到后端Pod的端口号
+    targetPort: 17074
+  # 选择具有指定Label标签的Pod作为管理范围
+  selector:
+    app: mzk-cms-1
+  # 是否支持session
+  sessionAffinity: None
+  # service类型
+  type: ClusterIP
+status:
+  loadBalancer: {}
