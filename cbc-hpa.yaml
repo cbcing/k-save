@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+# 元数据
+metadata:
+  name: demo-hpa
+# 详细信息
+spec:
+  # 此HPA的使用目标
+  scaleTargetRef:
+    apiVersion: v1
+    kind: Deployment
+    # 使用目标名称
+    name: mzk-cms-1
+  # 设置目标Pod最小副本值为1
+  minReplicas: 1
+  # 设置目标Pod最大副本值为10
+  maxReplicas: 10
+  # 设置目标Pod平均CPU使用率为50%
+  targetCPUUtilizationPercentage: 50
